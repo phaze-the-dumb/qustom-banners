@@ -1,0 +1,27 @@
+
+{
+    "_QPVersion": "0.1.1",
+    "name": "qustombanners",
+    "id": "qustombanners",
+    "author": "Phaze#6193",
+    "version": "1.0.3",
+    "packageId": "com.beatgames.beatsaber",
+    "packageVersion": "1.20.0",
+    "description": "A mod for customizing your banners.",
+    "modFiles": [
+        "libqustombanners.so"
+    ],
+    "libraryFiles": [
+        "libbeatsaber-hook_6_3_0.so"
+    ],
+    "fileCopies": [
+		{
+			"name": "banner.png",
+			"destination": "/sdcard/Pictures/banners/banner.png"
+		},
+        {
+			"name": "template (DON'T DELETE).png",
+			"destination": "/sdcard/Pictures/banners/template (DON'T DELETE).png"
+		}
+    ]
+}

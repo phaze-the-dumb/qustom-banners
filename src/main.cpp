@@ -6,7 +6,6 @@
 
 #include "banners/load.hpp"
 #include "ui/settings.hpp"
-#include "web/server.hpp"
 #include "utils/WebUtils.hpp"
 
 #include "beatsaber-hook/shared/utils/il2cpp-utils.hpp"
@@ -19,17 +18,12 @@
 
 #include "config-utils/shared/config-utils.hpp"
 
-#include "socket_lib/shared/ServerSocket.hpp"
-#include "socket_lib/shared/SocketHandler.hpp"
-#include "socket_lib/shared/SocketLogger.hpp"
-
 using namespace QuestUI;
 using namespace UnityEngine;
 using namespace UnityEngine::UI;
 using namespace GlobalNamespace;
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
-DEFINE_CONFIG(ModConfig);
 
 // Returns a logger, useful for printing debug messages
 Logger& getLogger() {
@@ -58,15 +52,15 @@ MAKE_HOOK_MATCH(MainMenuViewController_DidActivate, &MainMenuViewController::Did
     if(firstActivation && getModConfig().Active.GetValue()){
         Banners::LoadMenu();
 
-        if(getModConfig().Token.GetValue() == "None"){
-            auto json = WebUtils::GetJSON("https://192.168.11.13/api/v1/devices/register");
+        // if(getModConfig().Token.GetValue() == "None"){
+        //     auto json = WebUtils::GetJSON("https://192.168.11.13/api/v1/devices/register");
 
-            if(json->IsObject()){
-                auto jsonData = json->GetObject();
-                getModConfig().Token.SetValue(jsonData["token"].GetString());
-                getLogger().info("Registered Device Token");
-            }
-        }
+        //     if(json->IsObject()){
+        //         auto jsonData = json->GetObject();
+        //         getModConfig().Token.SetValue(jsonData["token"].GetString());
+        //         getLogger().info("Registered Device Token");
+        //     }
+        // }
     }
 }
 
@@ -87,10 +81,6 @@ extern "C" void load() {
     getModConfig().Init(modInfo);
 
     LoggerContextObject logger = getLogger().WithContext("load");
-
-    SocketLib::SocketHandler::getCommonSocketHandler().getLogger().loggerCallback += []( SocketLib::LoggerLevel level, std::string_view tag, std::string_view const log ){
-        getLogger().info("Socket Log: %s", std::string(log).c_str());
-    };
 
     QuestUI::Init();
     QuestUI::Register::RegisterModSettingsViewController(modInfo, BannerUI::DidActivate);

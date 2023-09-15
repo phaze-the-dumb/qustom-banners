@@ -49,11 +49,6 @@
       "id": "codegen",
       "versionRange": "*",
       "additionalData": {}
-    },
-    {
-      "id": "socket_lib",
-      "versionRange": "^0.6.1",
-      "additionalData": {}
     }
   ],
   "additionalData": {}

@@ -7,6 +7,10 @@
 #include "UnityEngine/Sprite.hpp"
 #include "UnityEngine/Transform.hpp"
 #include "UnityEngine/LayerMask.hpp"
+#include "UnityEngine/Texture2D.hpp"
+#include "UnityEngine/Resources.hpp"
+#include "UnityEngine/Material.hpp"
+#include "UnityEngine/Shader.hpp"
 
 #include "questui/shared/BeatSaberUI.hpp"
 #include "questui/shared/QuestUI.hpp"
@@ -22,13 +26,13 @@ using namespace GlobalNamespace;
 using namespace HMUI;
 
 namespace Banners{
-    UnityEngine::GameObject* LeftScreen;
-    UnityEngine::GameObject* RightScreen;
-    UnityEngine::GameObject* LeftScreenIG;
-    UnityEngine::GameObject* RightScreenIG;
+    UnityEngine::GameObject* leftScreen;
+    UnityEngine::GameObject* rightScreen;
+    UnityEngine::GameObject* leftScreenIG;
+    UnityEngine::GameObject* rightScreenIG;
 
     void LoadMenu(){
-        LeftScreen = BeatSaberUI::CreateFloatingScreen(
+        leftScreen = BeatSaberUI::CreateFloatingScreen(
             { 120, 240 },
             {
                 ( getModConfig().X.GetValue() * -1 ) - 15.0f,
@@ -42,7 +46,7 @@ namespace Banners{
             1
         );
 
-        RightScreen = BeatSaberUI::CreateFloatingScreen(
+        rightScreen = BeatSaberUI::CreateFloatingScreen(
             { 120, 240 },
             {
                 getModConfig().X.GetValue() + 15.0f,
@@ -58,19 +62,22 @@ namespace Banners{
 
         getLogger().info("Created Screens");
 
-        HMUI::ImageView* leftImage = BeatSaberUI::CreateImage(LeftScreen->get_transform(), Banners::GetLeft(), { 0, 0 }, {
+        leftScreen->GetComponent<Canvas*>()->set_sortingOrder(0);
+        rightScreen->GetComponent<Canvas*>()->set_sortingOrder(0);
+
+        HMUI::ImageView* leftImage = BeatSaberUI::CreateImage(leftScreen->get_transform(), Banners::GetLeft(), { 0, 0 }, {
             200.0f * getModConfig().Scale.GetValue(), 
             400.0f * getModConfig().Scale.GetValue()
         });
 
-        HMUI::ImageView* rightImage = BeatSaberUI::CreateImage(RightScreen->get_transform(), Banners::GetRight(), { 0, 0 }, {
-            200.0f * getModConfig().Scale.GetValue(), 
+        HMUI::ImageView* rightImage = BeatSaberUI::CreateImage(rightScreen->get_transform(), Banners::GetRight(), { 0, 0 }, {
+            200.0f * getModConfig().Scale.GetValue(),
             400.0f * getModConfig().Scale.GetValue()
         });
     }
 
     void LoadInGame(){
-        LeftScreenIG = BeatSaberUI::CreateFloatingScreen(
+        leftScreenIG = BeatSaberUI::CreateFloatingScreen(
             { 120, 240 },
             {
                 ( getModConfig().X.GetValue() * -1 ) - 15.0f,
@@ -84,7 +91,7 @@ namespace Banners{
             1
         );
 
-        RightScreenIG = BeatSaberUI::CreateFloatingScreen(
+        rightScreenIG = BeatSaberUI::CreateFloatingScreen(
             { 120, 240 },
             {
                 getModConfig().X.GetValue() + 15.0f,
@@ -98,15 +105,16 @@ namespace Banners{
             1
         );
 
-        getLogger().info("Created Screens");
+        leftScreen->GetComponent<Canvas*>()->set_sortingOrder(0);
+        rightScreen->GetComponent<Canvas*>()->set_sortingOrder(0);
 
-        HMUI::ImageView* leftImageIG = BeatSaberUI::CreateImage(LeftScreenIG->get_transform(), Banners::GetLeft(), { 0, 0 }, {
-            200.0f * getModConfig().Scale.GetValue(), 
+        HMUI::ImageView* leftImageIG = BeatSaberUI::CreateImage(leftScreenIG->get_transform(), Banners::GetLeft(), { 0, 0 }, {
+            200.0f * getModConfig().Scale.GetValue(),
             400.0f * getModConfig().Scale.GetValue()
         });
 
-        HMUI::ImageView* rightImageIG = BeatSaberUI::CreateImage(RightScreenIG->get_transform(), Banners::GetRight(), { 0, 0 }, {
-            200.0f * getModConfig().Scale.GetValue(), 
+        HMUI::ImageView* rightImageIG = BeatSaberUI::CreateImage(rightScreenIG->get_transform(), Banners::GetRight(), { 0, 0 }, {
+            200.0f * getModConfig().Scale.GetValue(),
             400.0f * getModConfig().Scale.GetValue()
         });
     }

@@ -9,7 +9,6 @@
 #define USER_AGENT (std::string("QuestBannersMod/v1.0.0")).c_str()
 
 namespace WebUtils {
-
     //https://stackoverflow.com/a/55660581
     std::string query_encode(const std::string& s)
     {
